@@ -44,7 +44,6 @@ const Hero = ({ onButtonEnter, onButtonLeave, onTextEnter, onTextLeave }) => {
         Estudante de Psicologia
         </h2>
         <p ref={descriptionRef} className="hero__description" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur amet repellendus repellat sapiente, libero commodi laborum reprehenderit dolorem quod modi.
         </p>
         <div ref={buttonRef} className="hero__buttons">
          
