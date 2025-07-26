@@ -1,0 +1,136 @@
+.experience {
+  padding-top: 120px;
+}
+
+.experience__title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.experience__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.experience__item {
+  padding: 30px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: calc(0.2s * var(--index, 0));
+}
+
+.experience__item:nth-child(1) {
+  --index: 1;
+}
+
+.experience__item:nth-child(2) {
+  --index: 2;
+}
+
+.experience__item:nth-child(3) {
+  --index: 3;
+}
+
+.experience__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.experience__icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.experience__icon svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.experience__years {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(106, 48, 147, 0.1);
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.experience__position {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.experience__company {
+  font-size: 0.95rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.experience__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.experience__achievements h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.experience__achievements ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.experience__achievements li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.experience__achievements li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.experience__title.animate,
+.experience__item.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 992px) {
+  .experience__container {
+    grid-template-columns: 1fr;
+  }
+}

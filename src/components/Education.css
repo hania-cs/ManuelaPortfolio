@@ -1,0 +1,138 @@
+.education {
+  padding-top: 120px;
+}
+
+.education__title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.education__timeline {
+  position: relative;
+  margin-top: 60px;
+  padding-left: 40px;
+}
+
+.education__timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}
+
+.education__item {
+  position: relative;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: calc(0.2s * var(--index, 0));
+}
+
+.education__item:nth-child(1) {
+  --index: 1;
+}
+
+.education__item:nth-child(2) {
+  --index: 2;
+}
+
+.education__item:nth-child(3) {
+  --index: 3;
+}
+
+.education__icon {
+  position: absolute;
+  top: 0;
+  left: -40px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(106, 48, 147, 0.2);
+  z-index: 1;
+}
+
+.education__icon svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--primary);
+}
+
+.education__content {
+  padding: 30px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.education__years {
+  display: inline-block;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.education__degree {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.education__institution {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.education__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.education__title.animate,
+.education__item.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .education__timeline {
+    padding-left: 30px;
+  }
+
+  .education__timeline::before {
+    left: 10px;
+  }
+
+  .education__icon {
+    left: -30px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .education__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .education__degree {
+    font-size: 1.2rem;
+  }
+}
+
+

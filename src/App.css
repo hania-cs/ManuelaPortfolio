@@ -1,0 +1,136 @@
+/* Replace the Google Fonts import with system fonts */
+/* @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"); */
+
+:root {
+  --primary: #6a3093;
+  --primary-light: #a044ff;
+  --secondary: #f27121;
+  --text: #333;
+  --text-light: #666;
+  --background: #f9f4ff;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 8px 32px rgba(106, 48, 147, 0.1);
+  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.app {
+  position: relative;
+  overflow: hidden;
+}
+
+main {
+  padding-top: 80px;
+}
+
+section {
+  min-height: 100vh;
+  padding: 100px 10%;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 2px;
+}
+
+.btn {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 6px 15px rgba(106, 48, 147, 0.2);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(135deg, var(--secondary), #ff9a44);
+  transition: var(--transition);
+  z-index: -1;
+  border-radius: 30px;
+}
+
+.btn:hover::before {
+  width: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(106, 48, 147, 0.3);
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(106, 48, 147, 0.15);
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 80px 5%;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+}
