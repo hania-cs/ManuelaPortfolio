@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,900;1,300;1,900&family=Space+Grotesk:wght@300;400;500&display=swap');
 
 :root {
-  --purple-50:  #EEEDFE;
-  --purple-100: #CECBF6;
+  --purple-200: #AFA9EC;
   --purple-400: #7F77DD;
   --purple-600: #534AB7;
   --purple-900: #26215C;
@@ -12,7 +11,7 @@
 }
 
 /* ─────────────────────────────────────────
-   ROOT
+   ROOT — mirrors footer structure exactly
 ───────────────────────────────────────── */
 .header {
   position: fixed;
@@ -20,30 +19,22 @@
   left: 0;
   width: 100%;
   z-index: 100;
+  background: var(--bg);
   font-family: 'Space Grotesk', sans-serif;
-  padding: 24px 0;
-  transition: padding 0.35s ease, background 0.35s ease, border-color 0.35s ease;
-  border-bottom: 1px solid transparent;
-}
-
-.header--scrolled {
-  padding: 16px 0;
-  background: rgba(240, 237, 230, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: rgba(83, 74, 183, 0.12);
+  border-bottom: 1px solid rgba(83, 74, 183, 0.15);
+  padding: 28px 0;
 }
 
 /* ─────────────────────────────────────────
-   CONTAINER
+   CONTAINER — same as footer__container
 ───────────────────────────────────────── */
 .header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(20px, 5vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* ─────────────────────────────────────────
@@ -52,7 +43,6 @@
 .header__logo {
   display: flex;
   align-items: baseline;
-  gap: 0;
   cursor: pointer;
   text-decoration: none;
 }
@@ -101,16 +91,15 @@
 .header__nav a {
   font-size: 9px;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
   position: relative;
   padding-bottom: 3px;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
-/* underline grows from left */
 .header__nav a::after {
   content: "";
   position: absolute;
@@ -154,17 +143,9 @@
   transform-origin: left;
 }
 
-/* open state — X */
-.header__menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translateY(-1px);
-}
-.header__menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-  width: 0;
-}
-.header__menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translateY(1px);
-}
+.header__menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(-1px); }
+.header__menu-toggle.active span:nth-child(2) { opacity: 0; width: 0; }
+.header__menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(1px); }
 
 /* ─────────────────────────────────────────
    MOBILE NAV
@@ -179,10 +160,8 @@
     width: 72%;
     max-width: 320px;
     height: 100vh;
-    background: rgba(240, 237, 230, 0.97);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-left: 1px solid rgba(83, 74, 183, 0.12);
+    background: var(--bg);
+    border-left: 1px solid rgba(83, 74, 183, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;

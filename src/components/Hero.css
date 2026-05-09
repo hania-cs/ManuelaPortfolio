@@ -27,6 +27,8 @@
   overflow: hidden;
   background: var(--bg);
   font-family: 'Space Grotesk', sans-serif;
+  margin-top: -10px;
+padding-top: 72px;
 }
 
 /* ─────────────────────────────────────────
