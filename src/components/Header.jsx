@@ -2,80 +2,75 @@
 
 import { useState, useEffect } from "react"
 import "./Header.css"
-import { Brain } from "./Icons"
 
 const Header = ({ activeSection, onMouseEnter, onMouseLeave }) => {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth",
-      })
-    }
+    const el = document.getElementById(sectionId)
+    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" })
     setMenuOpen(false)
   }
 
+  const navItems = [
+    { id: "about",           label: "Sobre"                      },
+    { id: "qualifications",  label: "Qualificações"              },
+    { id: "contact",         label: "Contato"                    },
+  ]
+
   return (
-    <header className={`header ${scrolled ? "header--scrolled" : ""}`}>
+    <header className={`header${scrolled ? " header--scrolled" : ""}`}>
       <div className="header__container">
+
+        {/* Logo — Manuela Frota Freire split into weight variants */}
         <div
           className="header__logo"
+          onClick={() => scrollToSection("hero")}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          onClick={() => scrollToSection("hero")}
         >
-          <Brain />
-          <span>Manuela</span>
+          <span className="header__logo-first">Manuela</span>
+          <span className="header__logo-middle">Frota</span>
+          <span className="header__logo-last">Freire</span>
         </div>
 
+        {/* Hamburger */}
         <div
-          className={`header__menu-toggle ${menuOpen ? "active" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
+          className={`header__menu-toggle${menuOpen ? " active" : ""}`}
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label="Toggle menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </div>
 
-        <nav className={`header__nav ${menuOpen ? "header__nav--open" : ""}`}>
+        {/* Nav */}
+        <nav className={`header__nav${menuOpen ? " header__nav--open" : ""}`}>
           <ul>
-            {["about", "qualifications", "contact"].map((section) => (
-              <li key={section}>
+            {navItems.map(({ id, label }) => (
+              <li key={id}>
                 <a
-                  href={`#${section}`}
-                  className={activeSection === section ? "active" : ""}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToSection(section)
-                  }}
+                  href={`#${id}`}
+                  className={activeSection === id ? "active" : ""}
+                  onClick={(e) => { e.preventDefault(); scrollToSection(id) }}
                   onMouseEnter={onMouseEnter}
                   onMouseLeave={onMouseLeave}
                 >
-                  {section === "qualifications"
-                    ? "Qualificações e Habilidades"
-                    : section === "about"
-                    ? "Sobre"
-                    : section === "contact"
-                    ? "Contato"
-                    : section.charAt(0).toUpperCase() + section.slice(1)}
+                  {label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
+
       </div>
     </header>
   )

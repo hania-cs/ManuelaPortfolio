@@ -44,7 +44,6 @@ function App() {
   return (
     <div className="app">
       <CustomCursor variant={cursorVariant} />
-      <NeuronBackground />
       <Header activeSection={activeSection} onMouseEnter={textEnter} onMouseLeave={defaultCursor} />
       <main>
         <Hero

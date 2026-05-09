@@ -1,221 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,900;1,300;1,900&family=Space+Grotesk:wght@300;400;500&display=swap');
+
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --purple-50:  #EEEDFE;
+  --purple-100: #CECBF6;
+  --purple-200: #AFA9EC;
+  --purple-400: #7F77DD;
+  --purple-600: #534AB7;
+  --purple-800: #3C3489;
+  --purple-900: #26215C;
+  --ink:        #1a1828;
+  --bg:         #f0ede6;
+  --muted:      #9794a8;
+}
+
+/* ─────────────────────────────────────────
+   ROOT
+───────────────────────────────────────── */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10%;
   position: relative;
+  width: 100%;
+  height: 90vh;
+  min-height: 600px;
   overflow: hidden;
+  background: var(--bg);
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-.hero__content {
-  flex: 1;
-  max-width: 600px;
-  z-index: 1;
-}
-
-.hero__name {
-  font-size: 4.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.hero__title {
-  font-size: 1.8rem;
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-  color: var(--text);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
-}
-
-.hero__description {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-light);
-  margin-bottom: 2rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
-}
-
-.hero__buttons {
-  display: flex;
-  gap: 1rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
-}
-
-.hero__btn--secondary {
-  background: transparent;
-  border: 2px solid var(--primary);
-  color: var(--primary);
-}
-
-.hero__btn--secondary::before {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-}
-
-.hero__btn--secondary:hover {
-  color: white;
-}
-
-.hero__visual {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.hero__brain {
-  width: 400px;
-  height: 400px;
-  position: relative;
-  animation: float 6s ease-in-out infinite;
-}
-
-.hero__brain-circle {
+/* ─────────────────────────────────────────
+   DOTTED BACKGROUND
+───────────────────────────────────────── */
+.hero__dots {
   position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-light), var(--primary));
-  opacity: 0.2;
-  filter: blur(10px);
-  animation: pulse 4s ease-in-out infinite;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(83, 74, 183, 0.15) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 65% 65% at 50% 45%,
+    transparent 28%,
+    black 90%
+  );
+  mask-image: radial-gradient(
+    ellipse 65% 65% at 50% 45%,
+    transparent 28%,
+    black 90%
+  );
+  pointer-events: none;
 }
 
-.hero__brain-circle:nth-child(1) {
-  width: 200px;
-  height: 200px;
+/* ─────────────────────────────────────────
+   GHOST WORD
+───────────────────────────────────────── */
+.hero__bg-word {
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  animation-delay: 0s;
+  transform: translate(-50%, -48%) rotate(-10deg);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 900;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--purple-400);
+  opacity: 0.04;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+  z-index: 0;
 }
 
-.hero__brain-circle:nth-child(2) {
-  width: 150px;
-  height: 150px;
-  top: 30%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  animation-delay: 0.5s;
+/* ─────────────────────────────────────────
+   CORNER LABELS
+───────────────────────────────────────── */
+.hero__corner {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  z-index: 6;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease 0.05s, transform 0.5s ease 0.05s;
+}
+.hero__corner.animate  { opacity: 1; transform: none; }
+.hero__corner--tl      { top: 28px; left: 36px; }
+.hero__corner--br      { bottom: 28px; right: 36px; }
+
+/* ─────────────────────────────────────────
+   NAME — TOP LEFT
+───────────────────────────────────────── */
+.hero__name-tl {
+  position: absolute;
+  top: clamp(52px, 9vh, 90px);
+  left: clamp(36px, 5vw, 72px);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+}
+.hero__name-tl.animate { opacity: 1; transform: none; }
+
+/* ─────────────────────────────────────────
+   NAME — BOTTOM RIGHT
+   Sized so "Freire" never clips: font capped
+   smaller and bottom offset accounts for the
+   CTA row (≈72px) + corner label (≈48px).
+───────────────────────────────────────── */
+.hero__name-br {
+  position: absolute;
+  /* Leave room for CTA (≈72px tall) + 16px gap */
+  bottom: clamp(88px, 14vh, 120px);
+  right: clamp(36px, 5vw, 72px);
+  text-align: right;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
+}
+.hero__name-br.animate { opacity: 1; transform: none; }
+
+/* ─────────────────────────────────────────
+   NAME SPANS
+───────────────────────────────────────── */
+.hero__name-first,
+.hero__name-last {
+  font-family: 'Playfair Display', serif;
+  /* Cap at 80px so "Freire" stays fully on screen */
+  font-size: clamp(48px, 7.5vw, 80px);
+  font-weight: 300;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  display: block;
 }
 
-.hero__brain-circle:nth-child(3) {
-  width: 180px;
-  height: 180px;
-  top: 60%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  animation-delay: 1s;
+.hero__name-middle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  display: block;
+  margin-top: 8px;
+  background: linear-gradient(135deg, var(--purple-400), var(--purple-900));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.hero__brain-circle:nth-child(4) {
-  width: 120px;
-  height: 120px;
-  top: 20%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  animation-delay: 1.5s;
+/* ─────────────────────────────────────────
+   CIRCULAR PHOTO
+   Vertically centred in the upper 55% of the
+   viewport so it sits clear of "Freire" below.
+───────────────────────────────────────── */
+.hero__photo-ring {
+  position: absolute;
+  /* Anchor to top so bottom of ring stays above bottom-half text */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%) scale(0.94);
+  /* Slightly smaller so it never encroaches on the name areas */
+  width: clamp(200px, 22vw, 280px);
+  height: clamp(200px, 22vw, 280px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--purple-600);
+  box-shadow:
+    0 0 0 10px var(--bg),
+    0 0 0 11px var(--purple-200),
+    0 0 0 22px var(--bg),
+    0 0 0 23px rgba(83, 74, 183, 0.10);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
 }
-
-.hero__brain-circle:nth-child(5) {
-  width: 160px;
-  height: 160px;
-  top: 70%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  animation-delay: 2s;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.3;
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-.hero__name.animate,
-.hero__title.animate,
-.hero__description.animate,
-.hero__buttons.animate {
+.hero__photo-ring.animate {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -54%) scale(1);
 }
 
-@media (max-width: 992px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-    padding-top: 100px;
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero__photo-tint {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(83, 74, 183, 0.1) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   FLOATING PILL TAGS
+───────────────────────────────────────── */
+.hero__tag {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.hero__tag.animate { opacity: 1; transform: translateY(0); }
+
+/* Solid purple — left, sits just below the name-tl block.
+   name-tl top ≈ clamp(52px,9vh,90px)
+   "Manuela" ≈ 80px tall + "Frota" ≈ 48px + 8px gap → ~136px total
+   So top = name-tl-top + ~144px gives a tight 8px gap below "Frota" */
+.hero__tag--solid {
+  top: calc(clamp(52px, 9vh, 90px) + clamp(120px, 19vh, 154px));
+  left: clamp(36px, 5vw, 72px);
+  transform: none;
+  background: var(--purple-500);
+  color: var(--purple-600);;
+  transition-delay: 0.4s;
+}
+.hero__tag--solid.animate {
+  opacity: 1;
+  transform: none;
+}
+
+/* Outlined — top right */
+.hero__tag--outline {
+  top: 12%;
+  right: 4%;
+  background: transparent;
+  color: var(--purple-600);
+  border: 1.5px solid var(--purple-600);
+  transition-delay: 0.55s;
+}
+
+/* Muted lavender — bottom left, aligned with "Freire" row */
+.hero__tag--muted {
+  /* Mirror the bottom-right name's bottom value */
+  bottom: clamp(88px, 14vh, 120px);
+  left: 4%;
+  background: var(--purple-50);
+  color: var(--purple-800);
+  border: 1px solid var(--purple-100);
+  transition-delay: 0.7s;
+}
+
+/* ─────────────────────────────────────────
+   CTA ROW — BOTTOM CENTER
+───────────────────────────────────────── */
+.hero__cta-row {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.85s;
+}
+.hero__cta-row.animate {
+  opacity: 1;
+}
+
+.hero__cta-line {
+  width: 40px;
+  height: 1px;
+  background: var(--purple-400);
+  flex-shrink: 0;
+}
+
+.hero__cta-btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple-600);
+  background: none;
+  border: 1.5px solid var(--purple-600);
+  padding: 13px 32px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+  white-space: nowrap;
+}
+.hero__cta-btn:hover {
+  background: var(--purple-600);
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — tablet
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero__name-first,
+  .hero__name-last  { font-size: clamp(38px, 9vw, 64px); }
+  .hero__name-middle { font-size: clamp(20px, 5.5vw, 36px); }
+
+  .hero__photo-ring {
+    width: clamp(170px, 34vw, 240px);
+    height: clamp(170px, 34vw, 240px);
+    top: 48%;
   }
 
-  .hero__content {
-    max-width: 100%;
-    margin-bottom: 50px;
+  /* Keep solid tag below name-tl on tablet */
+  .hero__tag--solid {
+    top: calc(clamp(52px, 9vh, 90px) + clamp(100px, 17vh, 130px));
+    left: clamp(20px, 4vw, 56px);
+    bottom: auto;
+    transform: none;
+  }
+  .hero__tag--solid.animate { transform: none; }
+
+  .hero__tag--muted {
+    bottom: clamp(108px, 18vh, 150px);
   }
 
-  .hero__name {
-    font-size: 3.5rem;
-  }
-
-  .hero__buttons {
-    justify-content: center;
-  }
-
-  .hero__visual {
-    width: 100%;
-  }
-
-  .hero__brain {
-    width: 300px;
-    height: 300px;
+  .hero__name-br {
+    bottom: clamp(96px, 15vh, 130px);
   }
 }
 
-@media (max-width: 576px) {
-  .hero__name {
-    font-size: 2.8rem;
+/* ─────────────────────────────────────────
+   RESPONSIVE — mobile
+───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero__name-tl  { top: 44px; left: 20px; }
+  .hero__name-br  { bottom: 90px; right: 20px; }
+
+  .hero__name-first,
+  .hero__name-last  { font-size: clamp(34px, 11vw, 52px); }
+  .hero__name-middle { font-size: clamp(18px, 7.5vw, 30px); }
+
+  .hero__photo-ring {
+    width: clamp(160px, 52vw, 220px);
+    height: clamp(160px, 52vw, 220px);
   }
 
-  .hero__title {
-    font-size: 1.4rem;
+  .hero__tag--muted   { display: none; }
+  .hero__tag--outline { top: 8%; right: 3%; }
+  .hero__tag--solid   {
+    top: calc(44px + clamp(90px, 15vh, 120px));
+    left: 20px;
+    bottom: auto;
+    transform: none;
   }
+  .hero__tag--solid.animate { transform: none; }
 
-  .hero__buttons {
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-  }
+  .hero__corner--br { display: none; }
+  .hero__corner--tl { top: 18px; left: 20px; }
 
-  .hero__brain {
-    width: 250px;
-    height: 250px;
-  }
+  .hero__cta-row { bottom: 24px; }
 }
-

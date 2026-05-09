@@ -9,7 +9,13 @@ const Footer = ({ onTextEnter, onTextLeave }) => {
     <footer className="footer">
       <div className="footer__container">
         <p className="footer__copyright" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-          &copy; {currentYear} Hania Seifeldeen. All rights reserved.
+          &copy; {currentYear} Manuela Frota Freire
+        </p>
+        <p className="footer__credit" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
+         Made with ❤️ by{" "}
+          <a href="https://vertexa.digital" target="_blank" rel="noopener noreferrer">
+            Vertexa Digital Studios
+          </a>
         </p>
       </div>
     </footer>

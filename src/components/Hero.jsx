@@ -2,73 +2,91 @@
 
 import { useEffect, useRef } from "react"
 import "./Hero.css"
+import manuela from "../assets/manuela.jpg"
 
 const Hero = ({ onButtonEnter, onButtonLeave, onTextEnter, onTextLeave }) => {
-  const nameRef = useRef(null)
-  const titleRef = useRef(null)
-  const descriptionRef = useRef(null)
-  const buttonRef = useRef(null)
+  const cornerTL  = useRef(null)
+  const cornerBR  = useRef(null)
+  const tlRef     = useRef(null)
+  const brRef     = useRef(null)
+  const photoRef  = useRef(null)
+  const tag1Ref   = useRef(null)
+  const tag2Ref   = useRef(null)
+  const tag3Ref   = useRef(null)
+  const ctaRef    = useRef(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate")
-          }
-        })
-      },
-      { threshold: 0.1 },
+      (entries) =>
+        entries.forEach((e) => e.isIntersecting && e.target.classList.add("animate")),
+      { threshold: 0.1 }
     )
 
-    if (nameRef.current) observer.observe(nameRef.current)
-    if (titleRef.current) observer.observe(titleRef.current)
-    if (descriptionRef.current) observer.observe(descriptionRef.current)
-    if (buttonRef.current) observer.observe(buttonRef.current)
-
-    return () => {
-      if (nameRef.current) observer.unobserve(nameRef.current)
-      if (titleRef.current) observer.unobserve(titleRef.current)
-      if (descriptionRef.current) observer.unobserve(descriptionRef.current)
-      if (buttonRef.current) observer.unobserve(buttonRef.current)
-    }
+    const refs = [cornerTL, cornerBR, tlRef, brRef, photoRef, tag1Ref, tag2Ref, tag3Ref, ctaRef]
+    refs.forEach((r) => r.current && observer.observe(r.current))
+    return () => refs.forEach((r) => r.current && observer.unobserve(r.current))
   }, [])
 
   return (
     <section id="hero" className="hero">
-      <div className="hero__content">
-        <h1 ref={nameRef} className="hero__name" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-        Manuela Frota Freire
-        </h1>
-        <h2 ref={titleRef} className="hero__title" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-        Estudante de Psicologia
-        </h2>
-        <p ref={descriptionRef} className="hero__description" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-        </p>
-        <div ref={buttonRef} className="hero__buttons">
-         
-          <button
-            className="btn hero__btn hero__btn--secondary"
-            onMouseEnter={onButtonEnter}
-            onMouseLeave={onButtonLeave}
-            onClick={() => {
-              document.getElementById("contact").scrollIntoView({ behavior: "smooth" })
-            }}
-          >
-            
-            Entre em contato
-          </button>
-        </div>
+
+      {/* Dotted grid */}
+      <div className="hero__dots" aria-hidden="true" />
+
+      {/* Ghost surname — decorative only */}
+      <span className="hero__bg-word" aria-hidden="true">Freire</span>
+
+      {/* Corner labels */}
+      <span ref={cornerTL} className="hero__corner hero__corner--tl">Portfólio</span>
+
+      {/* Name top-left: Manuela + Frota */}
+      <div
+        ref={tlRef}
+        className="hero__name-tl"
+        onMouseEnter={onTextEnter}
+        onMouseLeave={onTextLeave}
+      >
+        <span className="hero__name-first">Manuela</span>
+        <span className="hero__name-middle">Frota Frierre</span>
       </div>
-      <div className="hero__visual">
-        <div className="hero__brain">
-          <div className="hero__brain-circle"></div>
-          <div className="hero__brain-circle"></div>
-          <div className="hero__brain-circle"></div>
-          <div className="hero__brain-circle"></div>
-          <div className="hero__brain-circle"></div>
-        </div>
+
+      {/* Circular photo — dead center, slightly above */}
+      <div ref={photoRef} className="hero__photo-ring">
+        <img src={manuela} alt="Manuela Frota Freire" className="hero__photo" />
+        <div className="hero__photo-tint" aria-hidden="true" />
       </div>
+
+      {/* Name bottom-right: Freire — pinned so it never clips */}
+      <div
+        ref={brRef}
+        className="hero__name-br"
+        onMouseEnter={onTextEnter}
+        onMouseLeave={onTextLeave}
+      >
+        <span className="hero__name-last">Brasil</span>
+      </div>
+
+      {/* Floating tags */}
+      <span ref={tag1Ref} className="hero__tag hero__tag--solid">Estudante de Psicologia</span>
+      <span ref={tag2Ref} className="hero__tag hero__tag--outline">Psicologia Clínica</span>
+      <span ref={tag3Ref} className="hero__tag hero__tag--muted">2024</span>
+
+      {/* CTA — fixed 36px from bottom, always in view */}
+      <div ref={ctaRef} className="hero__cta-row">
+        <div className="hero__cta-line" />
+        <button
+          className="hero__cta-btn"
+          onMouseEnter={onButtonEnter}
+          onMouseLeave={onButtonLeave}
+          onClick={() =>
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+          }
+        >
+          Entre em contato
+        </button>
+        <div className="hero__cta-line" />
+      </div>
+
     </section>
   )
 }

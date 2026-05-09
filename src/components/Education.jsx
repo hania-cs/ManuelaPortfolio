@@ -1,94 +1,134 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import "./Education.css"
-import { Education as EducationIcon } from "./Icons"
+import "./Experience.css"
 
-const Education = ({ onTextEnter, onTextLeave }) => {
-  const titleRef = useRef(null)
-  const itemsRef = useRef([])
+const Experience = ({ onTextEnter, onTextLeave }) => {
+  const cornerTLRef = useRef(null)
+  const cornerTRRef = useRef(null)
+  const headingRef  = useRef(null)
+  const floatARef   = useRef(null)
+  const floatBRef   = useRef(null)
+  const itemsRef    = useRef([])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate")
-          }
-        })
-      },
-      { threshold: 0.1 },
+      (entries) =>
+        entries.forEach((e) => e.isIntersecting && e.target.classList.add("animate")),
+      { threshold: 0.1 }
     )
 
-    if (titleRef.current) observer.observe(titleRef.current)
-    itemsRef.current.forEach((item) => {
-      if (item) observer.observe(item)
-    })
+    const singles = [cornerTLRef, cornerTRRef, headingRef, floatARef, floatBRef]
+    singles.forEach((r) => r.current && observer.observe(r.current))
+    itemsRef.current.forEach((el) => el && observer.observe(el))
 
     return () => {
-      if (titleRef.current) observer.unobserve(titleRef.current)
-      itemsRef.current.forEach((item) => {
-        if (item) observer.unobserve(item)
-      })
+      singles.forEach((r) => r.current && observer.unobserve(r.current))
+      itemsRef.current.forEach((el) => el && observer.unobserve(el))
     }
   }, [])
 
-  const educationData = [
+  const experienceData = [
     {
-      degree: "Bacharelado em Psicologia",
-      institution: "Universidade Presbiteriana Mackenzie",
-      years: "2023- atualmente",
+      position: "Research Psychologist",
+      company: "Cognitive Science Institute",
+      years: "2022 – atual",
       description:
-        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
+        "Leading research projects on cognitive behavioral interventions for anxiety disorders. Developing and testing new therapeutic approaches. Supervising graduate students and research assistants.",
+      achievements: [
+        "Published 5 papers in high-impact journals",
+        "Secured $500,000 in research grants",
+        "Developed a novel therapeutic protocol for PTSD",
+      ],
     },
     {
-      degree: "Certificado de Conclusão do Ensino Médio",
-      institution: "Escola Morumbi Alphaville",
-      years: "2021-2023",
+      position: "Clinical Psychologist",
+      company: "Mental Health Center",
+      years: "2020 – 2022",
       description:
-        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
+        "Provided evidence-based psychological assessment and treatment for adults with various mental health conditions. Specialized in cognitive-behavioral therapy for anxiety and mood disorders.",
+      achievements: [
+        "Maintained a caseload of 20+ clients",
+        "Developed group therapy protocols",
+        "Achieved 85% treatment completion rate",
+      ],
     },
-    
+    {
+      position: "Research Assistant",
+      company: "Neuroscience Laboratory, UC Berkeley",
+      years: "2016 – 2020",
+      description:
+        "Assisted in designing and conducting experiments on the neural basis of decision-making and emotional regulation. Analyzed data using advanced statistical methods and neuroimaging techniques.",
+      achievements: [
+        "Co-authored 3 research papers",
+        "Presented findings at 5 international conferences",
+        "Developed a novel fMRI analysis protocol",
+      ],
+    },
   ]
 
   return (
-    <section id="education" className="education">
-      <h2
-        ref={titleRef}
-        className="section-title education__title"
+    <section id="experience" className="experience">
+
+      {/* Dotted grid */}
+      <div className="experience__dots" aria-hidden="true" />
+
+      {/* Ghost watermark */}
+      <span className="experience__bg-word" aria-hidden="true">Experiência</span>
+
+      {/* Corner labels */}
+      <span ref={cornerTLRef} className="experience__corner experience__corner--tl">Experiência</span>
+      <span ref={cornerTRRef} className="experience__corner experience__corner--tr">Profissional</span>
+
+      {/* Floating pills */}
+      <span ref={floatARef} className="experience__float-tag experience__float-tag--a">Voluntária</span>
+      <span ref={floatBRef} className="experience__float-tag experience__float-tag--b">Eventos</span>
+
+      {/* Heading */}
+      <div
+        ref={headingRef}
+        className="experience__heading-wrap"
         onMouseEnter={onTextEnter}
         onMouseLeave={onTextLeave}
       >
-        Education
-      </h2>
-
-      <div className="education__timeline">
-        {educationData.map((item, index) => (
-          <div key={index} ref={(el) => (itemsRef.current[index] = el)} className="education__item">
-            <div className="education__icon">
-              <EducationIcon />
-            </div>
-            <div className="education__content card">
-              <div className="education__years" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-                {item.years}
-              </div>
-              <h3 className="education__degree" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-                {item.degree}
-              </h3>
-              <div className="education__institution" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-                {item.institution}
-              </div>
-              <p className="education__description" onMouseEnter={onTextEnter} onMouseLeave={onTextLeave}>
-                {item.description}
-              </p>
-            </div>
-          </div>
-        ))}
+        <span className="experience__eyebrow">03 — Trajetória</span>
+        <span className="experience__title">
+          Experiência <em>Profissional</em>
+        </span>
       </div>
+
+      {/* Grid */}
+      <div className="experience__inner">
+        <div className="experience__grid">
+          {experienceData.map((item, index) => (
+            <div
+              key={index}
+              ref={(el) => (itemsRef.current[index] = el)}
+              className="experience__item"
+              onMouseEnter={onTextEnter}
+              onMouseLeave={onTextLeave}
+            >
+              <div className="experience__years">{item.years}</div>
+
+              <h3 className="experience__position">{item.position}</h3>
+              <hr className="experience__rule" />
+              <div className="experience__company">{item.company}</div>
+
+              <p className="experience__description">{item.description}</p>
+
+              <span className="experience__achievements-label">Destaques</span>
+              <ul className="experience__achievements">
+                {item.achievements.map((a, i) => (
+                  <li key={i} className="experience__achievement">{a}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </section>
-    
-    
   )
 }
 
-export default Education
+export default Experience
